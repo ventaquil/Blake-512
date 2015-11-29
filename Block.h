@@ -6,11 +6,11 @@
 
 class Block {
 public:
-	static BlocksContainer* CreateBlocks(std::string);
-	static std::string CreatePadding(int);
-	Block(std::string);
-	std::string ReturnContent(void);
-	std::string Get64b(int);
+    static BlocksContainer* CreateBlocks(std::string);
+    static std::string CreatePadding(int);
+    Block(std::string);
+    std::string ReturnContent(void);
+    std::string Get64b(int);
 protected:
-	std::string BlockContent;
+    std::string BlockContent;
 };
