@@ -57,28 +57,30 @@ void Hash::Make(BlocksContainer* Container) {
     }
 
     int Padding = Container->GetPadding();
-    unsigned int Encrypted = 0;
+    unsigned long long int Encrypted = 0;
 
     for (int a = 0, b = Container->GetLength(); a < b; a++){
-        Hash::T[0] = "";
+        std::stringstream Stream;
 
-        if (Padding <= 1024){
-            if ((a + 1) < b){
-                Encrypted += 1024;
-            }
-            else{
-                Encrypted += 1024 - Padding;
-            }
-            Hash::T[0].push_back((char)Encrypted);
-        }
-        else{
-            if (ceil((Encrypted + Padding) / 8) > b){
-                Hash::T[0].push_back((char)Encrypted);
-            }
-            else{
-                Hash::T[0].push_back((char)0);
-            }
-        }
+        if (Padding >= 1024){
+			if ((a + 1) == b){
+				Encrypted = 0;
+			}
+			else{
+				Encrypted += 1024;
+			}
+		}
+		else{
+			if ((a + 1) == b){
+				Encrypted += 1024 - Padding;
+			}
+			else{
+				Encrypted += 1024;
+			}
+		}
+
+		Stream << std::hex << Encrypted;
+		Hash::T[0] = Basics::Translate(Stream.str());
 
         for (int c = 0; c < 8; c++) {
             V[c] = Hash::H[c];
