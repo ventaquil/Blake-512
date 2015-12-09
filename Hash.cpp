@@ -59,12 +59,16 @@ void Hash::Make(BlocksContainer* Container) {
     int Padding = Container->GetPadding();
     unsigned long long int Encrypted = 0;
 
+    std::stringstream Stream;
     for (int a = 0, b = Container->GetLength(); a < b; a++){
-        std::stringstream Stream;
+        Stream.str(std::string());
 
         if (Padding >= 1024){
 			if ((a + 1) == b){
 				Encrypted = 0;
+			}
+			else if ((a + 2) == b){
+				Encrypted += 1024 - (Padding - 1024);
 			}
 			else{
 				Encrypted += 1024;
